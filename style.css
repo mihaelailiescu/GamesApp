@@ -11,3 +11,35 @@
     border: none;
     color: white;
 }
+
+.creationForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.creationForm>label,
+.creationForm>input,
+.creationForm>textarea,
+.creationForm>select {
+    display: block;
+    margin: 5px 10px;
+}
+
+.submit-btn {
+    width: 100px;
+    height: 20px;
+    background-color: green;
+    border: none;
+    color: white;
+}
+
+.inputError {
+    border: 1px solid red;
+}
+
+.errorMsg {
+    margin-left: 10px;
+    color: red;
+    display: block;
+    font-size: 14px;
+}
