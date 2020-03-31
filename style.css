@@ -12,6 +12,39 @@
     color: white;
 }
 
+.updateBtn {
+    width: 100px;
+    height: 20px;
+    background-color: blue;
+    border: none;
+    color: white;
+}
+
+.submit-btn {
+    width: 100px;
+    height: 20px;
+    background-color: green;
+    border: none;
+    color: white;
+}
+
+img {
+    width: 90px;
+    float: left;
+    margin: 10px;
+}
+
+h1 {
+    color: blue;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+button {
+    margin: 10px;
+}
+
 .creationForm {
     display: flex;
     flex-direction: column;
@@ -23,14 +56,6 @@
 .creationForm>select {
     display: block;
     margin: 5px 10px;
-}
-
-.submit-btn {
-    width: 100px;
-    height: 20px;
-    background-color: green;
-    border: none;
-    color: white;
 }
 
 .inputError {
