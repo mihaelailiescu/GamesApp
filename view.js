@@ -49,7 +49,7 @@ function validateReleaseTimestampElement(inputElement, errorMessage) {
     }
 }
 
-function buidErrorMessage(inputEl, errorMsg) {
+function buildErrorMessage(inputEl, errorMsg) {
     inputEl.classList.add("inputError");
     const errorMsgElement = document.createElement("span");
     errorMsgElement.setAttribute("rel", inputEl.id);
@@ -57,6 +57,37 @@ function buidErrorMessage(inputEl, errorMsg) {
     errorMsgElement.innerHTML = errorMsg;
     inputEl.after(errorMsgElement);
 }
+
+document.querySelector(".submit-btn").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    const gameTitle = document.getElementById("gameTitle");
+    const gameDescription = document.getElementById("gameDescription");
+    const gameGenre = document.getElementById("gameGenre");
+    const gamePublisher = document.getElementById("gamePublisher");
+    const gameImageURl = document.getElementById("gameImageUrl");
+    const gameRelease = document.getElementById("gameRelease");
+
+
+    validateFormElement(gameTitle, "The title is required!");
+    validateFormElement(gameGenre, "The genre is required!");
+    validateFormElement(gameImageURl, "The image URL is required!");
+    validateFormElement(gameRelease, "The Release is required!");
+
+    validateReleaseTimestampElement(gameRelease, "The release date you provideiis not a valid timestamp!");
+
+    if (gameTitle.value !== "" && gameGenre.value === "" && gameImageURl.value === "" && gameRelease.value === "") {
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("title", gameTitle.value);
+        urlencoded.append("releaseDate", gameRelease.value);
+        urlencoded.append("genre", gameGenre.value);
+        urlencoded.append("publisher", gamePublisher.value);
+        urlencoded.append("imageUrl", gameImageUrl.value);
+        urlencoded.append("description", gameDescription.value);
+
+        createGameRequest(urlencoded, createDomElement);
+    }
+})
 
 document.querySelector(".submit-btn").addEventListener("click", function(event) {
     event.preventDefault();

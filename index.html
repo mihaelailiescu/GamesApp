@@ -39,6 +39,21 @@
 
     <div class="container"></div>
 
+    <form id="updateForm">
+        <label for="gameTitle">Title *</label>
+        <input type="text" value="" name="gameTitle" id="gameTitleUpdated" />
+
+        <label for="gameDescription">Description</label>
+        <textarea name="gameDescription" id="gameDescriptionUpdated"></textarea>
+
+        <label for="gameImageUrl">Image URL *</label>
+        <input type="text" name="gameImageUrl" id="gameImageUrlUpdated" />
+
+        <button class="updateBtn">Save Changes</button>
+        <button class="cancel-btn">Cancel</button>
+
+    </form>
+
     <script src="model.js"></script>
     <script src="view.js"></script>
 </body>
