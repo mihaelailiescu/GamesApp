@@ -39,18 +39,20 @@ function createGameRequest(gameObject, callbackCreateGame) {
     });
 }
 
-function updateGameRequest(updatedGameObj, callbackCreateGame) {
-    fetch(apiURL + "/games", {
+function updateGameRequest(idOfGameToBeUpdated, updatedGameObj) {
+    console.log(apiURL + "/games/" + idOfGameToBeUpdated);
+    fetch(apiURL + "/games/" + idOfGameToBeUpdated, {
         method: "PUT",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: gameObject
+        body: updatedGameObj
     }).then(function(response) {
-        return response.json();
+        var respJson = response.json();
+        return respJson;
     }).then(function(updatedGame) {
-        console.log(updatedGame);
-        callbackCreateGame(updatedGame);
+        // console.log("update finished");
+        // callbackUpdateGame();
     });
 }
 

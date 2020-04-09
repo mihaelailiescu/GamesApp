@@ -28,6 +28,22 @@
     color: white;
 }
 
+.saveChangesBtn {
+    width: 100px;
+    height: 20px;
+    background-color: yellowgreen;
+    border: none;
+    color: white;
+}
+
+.cancelBtn {
+    width: 100px;
+    height: 20px;
+    background-color: violet;
+    border: none;
+    color: white;
+}
+
 img {
     width: 90px;
     float: left;
@@ -50,6 +66,12 @@ button {
     flex-direction: column;
 }
 
+
+/* .updateForm {
+    display: flex;
+    flex-direction: column;
+} */
+
 .creationForm>label,
 .creationForm>input,
 .creationForm>textarea,
@@ -57,6 +79,15 @@ button {
     display: block;
     margin: 5px 10px;
 }
+
+
+/* .updateForm>label,
+.updateForm>input,
+.updateForm>textarea,
+.updateForm>select {
+    display: block;
+    margin: 5px 10px;
+} */
 
 .inputError {
     border: 1px solid red;
