@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-.deleteBtn {
+.delete-btn {
     width: 100px;
     height: 20px;
     background-color: red;
@@ -12,7 +12,7 @@
     color: white;
 }
 
-.updateBtn {
+.update-btn {
     width: 100px;
     height: 20px;
     background-color: blue;
@@ -20,7 +20,7 @@
     color: white;
 }
 
-.submit-btn {
+.submitBtn {
     width: 100px;
     height: 20px;
     background-color: green;
@@ -28,7 +28,7 @@
     color: white;
 }
 
-.saveChangesBtn {
+.updateBtn {
     width: 100px;
     height: 20px;
     background-color: yellowgreen;
@@ -66,11 +66,10 @@ button {
     flex-direction: column;
 }
 
-
-/* .updateForm {
+#updateForm {
     display: flex;
     flex-direction: column;
-} */
+}
 
 .creationForm>label,
 .creationForm>input,
@@ -80,14 +79,13 @@ button {
     margin: 5px 10px;
 }
 
-
-/* .updateForm>label,
-.updateForm>input,
-.updateForm>textarea,
-.updateForm>select {
+#updateForm>label,
+#updateForm>input,
+#updateForm>textarea,
+#updateForm>select {
     display: block;
     margin: 5px 10px;
-} */
+}
 
 .inputError {
     border: 1px solid red;

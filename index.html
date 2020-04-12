@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
-    <title>GamesApp</title>
+    <title>Games App</title>
 </head>
 
 <body>
-    <form class="creationForm" action="" method="POST">
-        <label for="gameTitle"> Title *</label>
+    <form class="creationForm">
+        <label for="gameTitle">Title *</label>
         <input type="text" value="" name="gameTitle" id="gameTitle" />
 
         <label for="gameDescription">Description</label>
@@ -19,9 +19,10 @@
         <label for="gameGenre">Genre *</label>
         <select name="gameGenre" id="gameGenre">
             <option value="">-</option>
-        <option value="Action">Action</option>
-        <option value="Adventure">Adventure</option>
-            </select>
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+        </select>
+
         <label for="gamePublisher">Publisher</label>
         <input type="text" name="gamePublisher" id="gamePublisher" />
 
@@ -31,29 +32,26 @@
         <label for="gameRelease">Release Date *</label>
         <input type="text" name="gameRelease" id="gameRelease" />
 
-        <button type="submit" class="submit-btn">Create Game</button>
-
+        <button class="submitBtn">Create Game</button>
     </form>
-
-
 
     <div class="container"> </div>
 
 
-    <!-- <form id="updateForm" action="" method="PUT">
-        <label for="gameTitle" id="labelForGameTitle">Title *</label>
-        <input type="text" value="" name="gameTitle" id="gameTitleUpdated" />
+    <form id="updateForm">
+        <label for="gameTitle" style="display: none" id="labelforUpdatedTitle">Title *</label>
+        <input type="text" value="" name="gameTitle" style="display: none" id="gameTitleUpdated" />
 
-        <label for="gameDescription" id="labelForGameDescription">Description</label>
-        <textarea name="gameDescription" id="gameDescriptionUpdated"></textarea>
+        <label for="gameDescription" style="display: none" id="labelForUpdatedDescription">Description</label>
+        <textarea name="gameDescription" id="gameDescriptionUpdated" style="display: none"></textarea>
 
-        <label for="gameImageUrl" id="labelForImageUrl">Image URL *</label>
-        <input type="text" name="gameImageUrl" id="gameImageUrlUpdated" />
+        <label for="gameImageUrl" style="display: none" id="labelForUpdatedImage">Image URL *</label>
+        <input type="text" name="gameImageUrl" id="gameImageUrlUpdated" style="display: none" />
 
-        <button class="saveChangesBtn" id="updateBtnId">Save Changes</button>
-        <button class="cancel-btn" id="cancel-btnId">Cancel</button>
+        <button class="updateBtn" style="display: none" id="saveBtn">Save Changes</button>
+        <button class="cancelBtn" style="display: none" id="cancelBtn">Cancel</button>
+    </form>
 
-    </form> -->
 
     <script src="model.js"></script>
     <script src="view.js"></script>

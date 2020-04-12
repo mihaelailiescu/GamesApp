@@ -11,10 +11,11 @@ function getGamesList(callbackFunction) {
     }).then(function(arrayOfGames) {
         callbackFunction(arrayOfGames);
     });
-
 }
 
+
 function deleteGame(gameID, callbackFunction) {
+    console.log(apiURL + "/games/" + gameID)
     fetch(apiURL + "/games/" + gameID, {
         method: "DELETE"
     }).then(function(r) {
@@ -22,6 +23,7 @@ function deleteGame(gameID, callbackFunction) {
     }).then(function(apiresponse) {
         callbackFunction(apiresponse);
     });
+
 }
 
 function createGameRequest(gameObject, callbackCreateGame) {
@@ -39,22 +41,30 @@ function createGameRequest(gameObject, callbackCreateGame) {
     });
 }
 
+
 function updateGameRequest(idOfGameToBeUpdated, updatedGameObj) {
-    console.log(apiURL + "/games/" + idOfGameToBeUpdated);
+    console.log(apiURL + "/games/");
+
+
     fetch(apiURL + "/games/" + idOfGameToBeUpdated, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: updatedGameObj
-    }).then(function(response) {
-        var respJson = response.json();
-        return respJson;
-    }).then(function(updatedGame) {
-        // console.log("update finished");
-        // callbackUpdateGame();
-    });
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: updatedGameObj
+        }).then(function(response) {
+            console.log("response received")
+            var respJson = response.json();
+            console.log(respJson);
+
+            return respJson;
+        }).then(function(updatedGame) {
+            // console.log("update finished");
+            // callbackUpdateGame();
+        })
+        .catch(error => { console.log('request failed', error); });
 }
+
 
 // "application/json"
 // {"cheie": "valoare", "cheie2": "valoare2"}
