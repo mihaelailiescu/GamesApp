@@ -1,10 +1,10 @@
 getGamesList()
-for (var i = 0; i < arrayOfGames.length; i++) {
-    createDomElement(arrayOfGames[i]);
-
-}
-
-
+    .then(arrayOfGames => {
+        console.log(arrayOfGames);
+        for (var i = 0; i < arrayOfGames.length; i++) {
+            createDomElement(arrayOfGames[i]);
+        }
+    });
 
 function createDomElement(gameObj) {
     var container1 = document.querySelector('.container');
@@ -18,16 +18,16 @@ function createDomElement(gameObj) {
 
     container1.appendChild(gameELement);
 
-
     gameELement.setAttribute("id", gameObj._id)
     document.getElementById(`${gameObj._id}`).addEventListener("click", function(event) {
         console.log(event.target);
         if (event.target.classList.contains('delete-btn')) {
-            deleteGame(event.target.getAttribute("id"), function(apiResponse) {
-                console.log(apiResponse);
-                removeDeletedElementFromDOM(event.target.parentElement);
-            })
-        }
+            deleteGame(event.target.getAttribute("id"))
+                .then(apiResponse => {
+                    console.log(apiResponse);
+                    removeDeletedElementFromDOM(event.target.parentElement);
+                })
+        };
         // daca este pe butonul de update, atunci in momentul in care utilizatorul apasa de Update btn, ii apar field-urile deja populate cu detaliile jocului pe care buton da click
         if (event.target.classList.contains('update-btn')) {
 
@@ -49,13 +49,9 @@ function createDomElement(gameObj) {
             console.log(`${gameObj.imageUrl}`);
             gameImage = `${gameObj.imageUrl}`;
             document.getElementById("gameImageUrlUpdated").value = gameImage;
-
-            // container1.appendChild("updateForm");
-
         }
 
         document.getElementById("saveBtn").addEventListener("click", function(event) {
-
             var urlencoded = new URLSearchParams();
             console.log(document.getElementById("gameTitleUpdated").value);
             urlencoded.append("title", document.getElementById("gameTitleUpdated").value);
@@ -66,7 +62,6 @@ function createDomElement(gameObj) {
             updateGameRequest(gameObj._id, urlencoded)
 
             //dupa ce s-a facut update-ul, formularul dispare din pagina
-
             hideForm();
         })
     })
@@ -82,7 +77,6 @@ function makeVisible(objectID) {
 }
 
 function showForm() {
-
     makeVisible("updateForm");
     makeVisible("labelforUpdatedTitle");
     makeVisible("gameTitleUpdated");
@@ -108,7 +102,6 @@ function hideForm() {
     makeInvisible("gameImageUrlUpdated");
     makeInvisible("saveBtn");
     makeInvisible("cancelBtn");
-
 }
 
 function removeDeletedElementFromDOM(domElement) {
@@ -144,7 +137,6 @@ function buildErrorMessage(inputEl, errosMsg) {
     inputEl.after(errorMsgElement);
 }
 
-
 document.querySelector(".submitBtn").addEventListener("click", function(event) {
     event.preventDefault();
 
@@ -171,6 +163,11 @@ document.querySelector(".submitBtn").addEventListener("click", function(event) {
         urlencoded.append("imageUrl", gameImageUrl.value);
         urlencoded.append("description", gameDescription.value);
 
-        createGameRequest(urlencoded, createDomElement);
+        createGameRequest(urlencoded)
+            .then(apiResponse => {
+                console.log("game created");
+                console.log(apiResponse);
+                createDomElement(apiResponse)
+            })
     }
 })

@@ -46,6 +46,22 @@ async function deleteGame() {
     return apiresponse;
 }
 
+// async function deleteGame(gameID) {
+
+//     try {
+//         const r = await new Promise((resolve, reject) => {
+//             fetch(apiURL + "/games/" + gameID, {
+//                 method: "DELETE"
+//             });
+//         });
+//         console.log("The game was deleted");
+//         return resolve(r.text());
+//     } catch (errorMsg) {
+//         console.log("An error has ocuuper: ", errorMsg);
+//     }
+
+// }
+
 // function createGameRequest(gameObject, callbackCreateGame) {
 //     fetch(apiURL + "/games", {
 //         method: "POST",
