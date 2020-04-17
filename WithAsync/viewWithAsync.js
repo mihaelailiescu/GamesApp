@@ -1,94 +1,11 @@
-// getGamesList(function(arrayOfGames) {
-//     for (var i = 0; i < arrayOfGames.length; i++) {
-//         createDomElement(arrayOfGames[i]);
-
-//     }
-// });
-
 async function startApp() {
     const arrayOfGames = await getGamesList()
     console.log(arrayOfGames);
     for (var i = 0; i < arrayOfGames.length; i++) {
         createDomElement(arrayOfGames[i]);
-
     }
 }
 startApp();
-
-// async function createDomElement() {
-//     var container1 = await document.querySelector('.container');
-
-//     const gameELement = await document.createElement("div");
-//     gameELement.innerHTML = `<h1>${gameObj.title}</h1> 
-//                         <img src="${gameObj.imageUrl}" />
-//                         <p>${gameObj.description}</p> 
-//                         <button class="delete-btn" id="${gameObj._id}">Delete Game</button>
-//                         <button class="update-btn" id="${gameObj._id}">Edit Game</button>`;
-
-//     container1.appendChild(gameELement);
-
-
-//     gameELement.setAttribute("id", gameObj._id)
-//     document.getElementById(`${gameObj._id}`).addEventListener("click", function(event) {
-//         console.log(event.target);
-//         if (event.target.classList.contains('delete-btn')) {
-//             deleteGame();
-
-//             removeDeletedElementFromDOM(event.target.parentElement);
-
-//             // deleteGame(event.target.getAttribute("id"), function(apiResponse) {
-//             //     console.log(apiResponse);
-//             //     removeDeletedElementFromDOM(event.target.parentElement);
-//             // })
-//         }
-//         // daca este pe butonul de update, atunci in momentul in care utilizatorul apasa de Update btn, ii apar field-urile deja populate cu detaliile jocului pe care buton da click
-//         if (event.target.classList.contains('update-btn')) {
-
-//             var form = document.querySelector('#updateForm');
-//             gameELement.appendChild(form);
-
-//             showForm();
-//             let gameTitle;
-//             console.log(`${gameObj.title}`);
-//             gameTitle = `${gameObj.title}`;
-//             document.getElementById("gameTitleUpdated").value = gameTitle;
-
-//             let gameDescription;
-//             console.log(`${gameObj.description}`);
-//             gameDescription = `${gameObj.description}`;
-//             document.getElementById("gameDescriptionUpdated").value = gameDescription;
-
-//             let gameImage;
-//             console.log(`${gameObj.imageUrl}`);
-//             gameImage = `${gameObj.imageUrl}`;
-//             document.getElementById("gameImageUrlUpdated").value = gameImage;
-
-//             // container1.appendChild("updateForm");
-
-//         }
-
-//         document.getElementById("saveBtn").addEventListener("click", function(event) {
-
-//             var urlencoded = new URLSearchParams();
-//             console.log(document.getElementById("gameTitleUpdated").value);
-//             urlencoded.append("title", document.getElementById("gameTitleUpdated").value);
-//             urlencoded.append("imageUrl", document.getElementById("gameImageUrlUpdated").value);
-//             urlencoded.append("description", document.getElementById("gameDescriptionUpdated").value);
-
-//             console.log(gameObj._id);
-//             updateGameRequest()
-
-//             //dupa ce s-a facut update-ul, formularul dispare din pagina
-
-//             hideForm();
-//         })
-//     })
-
-//     // daca apasam butonul de cancel, formularul dispare din pagina
-//     document.getElementById("cancelBtn").addEventListener("click", function() {
-//         hideForm();
-//     })
-// }
 
 function createDomElement(gameObj) {
     var container1 = document.querySelector('.container');
@@ -102,19 +19,13 @@ function createDomElement(gameObj) {
 
     container1.appendChild(gameELement);
 
-
     gameELement.setAttribute("id", gameObj._id)
     document.getElementById(`${gameObj._id}`).addEventListener("click", function(event) {
         console.log(event.target);
         if (event.target.classList.contains('delete-btn')) {
-            deleteGame();
+            deleteGame(event.target.getAttribute("id"));
 
             removeDeletedElementFromDOM(event.target.parentElement);
-
-            // deleteGame(event.target.getAttribute("id"), function(apiResponse) {
-            //     console.log(apiResponse);
-            //     removeDeletedElementFromDOM(event.target.parentElement);
-            // })
         }
         // daca este pe butonul de update, atunci in momentul in care utilizatorul apasa de Update btn, ii apar field-urile deja populate cu detaliile jocului pe care buton da click
         if (event.target.classList.contains('update-btn')) {
@@ -137,9 +48,6 @@ function createDomElement(gameObj) {
             console.log(`${gameObj.imageUrl}`);
             gameImage = `${gameObj.imageUrl}`;
             document.getElementById("gameImageUrlUpdated").value = gameImage;
-
-            // container1.appendChild("updateForm");
-
         }
 
         document.getElementById("saveBtn").addEventListener("click", function(event) {
@@ -154,7 +62,6 @@ function createDomElement(gameObj) {
             updateGameRequest()
 
             //dupa ce s-a facut update-ul, formularul dispare din pagina
-
             hideForm();
         })
     })
@@ -232,8 +139,7 @@ function buildErrorMessage(inputEl, errosMsg) {
     inputEl.after(errorMsgElement);
 }
 
-
-document.querySelector(".submitBtn").addEventListener("click", function(event) {
+document.querySelector(".submitBtn").addEventListener("click", async function(event) {
     event.preventDefault();
 
     const gameTitle = document.getElementById("gameTitle");
@@ -259,6 +165,7 @@ document.querySelector(".submitBtn").addEventListener("click", function(event) {
         urlencoded.append("imageUrl", gameImageUrl.value);
         urlencoded.append("description", gameDescription.value);
 
-        createGameRequest();
+        const newGame = await createGameRequest(urlencoded);
+        createDomElement(newGame);
     }
 })
