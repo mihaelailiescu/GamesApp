@@ -63,8 +63,6 @@ FetchGame.prototype.createGameRequest = function(gameObject, callbackCreateGame)
     });
 }
 
-//la functia de update mi-a aparut eoarea asta:<< request failed TypeError: Failed to fetch >> la care nu am reusit sa ii dau de cap, nu a mers nici inainte, nu e vorba de OOP
-
 FetchGame.prototype.updateGameRequest = function(idOfGameToBeUpdated, updatedGameObj) {
     let urlencoded = this.buildUpdateGameUrl(updatedGameObj);
     console.log(apiURL + "/games/");
@@ -77,8 +75,6 @@ FetchGame.prototype.updateGameRequest = function(idOfGameToBeUpdated, updatedGam
         }).then(function(response) {
             console.log("response received")
             var respJson = response.json();
-            console.log(respJson);
-
             return respJson;
         }).then(function(updatedGame) {})
         .catch(error => { console.log('request failed', error); });

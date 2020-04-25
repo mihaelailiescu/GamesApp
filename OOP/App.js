@@ -3,7 +3,6 @@ let gameFetcher = new FetchGame(apiURL);
 gameFetcher.getGamesList(function(arrayOfGames) {
     for (var i = 0; i < arrayOfGames.length; i++) {
         createDomElement(arrayOfGames[i]);
-
     }
 });
 
@@ -15,7 +14,7 @@ function createDomElement(gameObj) {
                         <img src="${gameObj.imageUrl}" />
                         <p>${gameObj.description}</p> 
                         <button class="delete-btn" id="${gameObj._id}">Delete Game</button>
-                        <button class="update-btn" id="${gameObj._id}">Edit Game</button>`;
+                        <button class="update-btn" >Edit Game</button>`;
 
     container1.appendChild(gameELement);
 
@@ -29,79 +28,43 @@ function createDomElement(gameObj) {
         }
         // daca este pe butonul de update, atunci in momentul in care utilizatorul apasa de Update btn, ii apar field-urile deja populate cu detaliile jocului pe care buton da click
         if (event.target.classList.contains('update-btn')) {
-
             var form = document.querySelector('#updateForm');
-            gameELement.appendChild(form);
+            form.reset(); //facem reset, ca sa ii stergem continutul - daca cumva are
+            event.target.parentElement.appendChild(form);
+            form.style.display = "initial"; //afisam formularul
 
-            showForm();
-            let gameTitle;
-            gameTitle = `${gameObj.title}`;
-            document.getElementById("gameTitleUpdated").value = gameTitle;
+            const gameContainerDiv = event.target.parentElement;
+            //punem in inputuri valorile afisate deja in pagina
+            form.querySelector("#gameTitleUpdated").value = gameContainerDiv.querySelector("h1").innerText;
+            form.querySelector("#gameDescriptionUpdated").value = gameContainerDiv.querySelector("p").innerText;
+            form.querySelector("#gameImageUrlUpdated").value = gameContainerDiv.querySelector("img").getAttribute("src");
 
-            let gameDescription;
-            gameDescription = `${gameObj.description}`;
-            document.getElementById("gameDescriptionUpdated").value = gameDescription;
+            form.querySelector("#saveBtn").addEventListener("click", function(event2) {
+                    event2.preventDefault();
+                    const inputTitle = form.querySelector("#gameTitleUpdated");
+                    const textareaDescription = form.querySelector("#gameDescriptionUpdated");
+                    const inputImageUrl = form.querySelector("#gameImageUrlUpdated");
 
-            let gameImage;
-            gameImage = `${gameObj.imageUrl}`;
-            document.getElementById("gameImageUrlUpdated").value = gameImage;
-
-            // container1.appendChild("updateForm");
-
+                    //luam valorile modificate de utilizator
+                    const newUpdatedGame = new Game();
+                    newUpdatedGame.setTitle(document.getElementById("gameTitleUpdated").value);
+                    newUpdatedGame.setDescription(document.getElementById("gameDescriptionUpdated").value);
+                    newUpdatedGame.setImageUrl(document.getElementById("gameImageUrlUpdated").value);
+                    // facem request-ul
+                    gameFetcher.updateGameRequest(event2.target.parentElement.parentElement.getAttribute("id"), newUpdatedGame)
+                        //dupa ce s-a facut update-ul, formularul dispare din pagina
+                    form.style.display = "none";
+                    //actualizam pagina cu noile valori modificate de utilizator
+                    gameContainerDiv.querySelector("h1").innerText = inputTitle.value;
+                    gameContainerDiv.querySelector("p").innerText = textareaDescription.value;
+                    gameContainerDiv.querySelector("img").getAttribute("src", inputImageUrl);
+                })
+                // daca apasam butonul de cancel, formularul dispare din pagina
+            form.querySelector("#cancelBtn").addEventListener("click", function() {
+                form.style.display = "none";
+            })
         }
-
-        document.getElementById("saveBtn").addEventListener("click", function(event) {
-            const newUpdatedGame = new Game();
-
-            newUpdatedGame.setTitle(document.getElementById("gameTitleUpdated").value);
-            newUpdatedGame.setDescription(document.getElementById("gameDescriptionUpdated").value);
-            newUpdatedGame.setImageUrl(document.getElementById("gameImageUrlUpdated").value);
-            gameFetcher.updateGameRequest(gameObj._id, newUpdatedGame)
-
-            //dupa ce s-a facut update-ul, formularul dispare din pagina
-
-            hideForm();
-        })
     })
-
-    // daca apasam butonul de cancel, formularul dispare din pagina
-    document.getElementById("cancelBtn").addEventListener("click", function() {
-        hideForm();
-    })
-}
-
-function makeVisible(objectID) {
-    document.getElementById(objectID).style.display = "initial";
-}
-
-function showForm() {
-
-    makeVisible("updateForm");
-    makeVisible("labelforUpdatedTitle");
-    makeVisible("gameTitleUpdated");
-    makeVisible("labelForUpdatedDescription");
-    makeVisible("gameDescriptionUpdated");
-    makeVisible("labelForUpdatedImage");
-    makeVisible("gameImageUrlUpdated");
-    makeVisible("saveBtn");
-    makeVisible("cancelBtn");
-}
-
-function makeInvisible(objectID) {
-    document.getElementById(objectID).style.display = "none";
-}
-
-function hideForm() {
-    makeInvisible("updateForm");
-    makeInvisible("labelforUpdatedTitle");
-    makeInvisible("gameTitleUpdated");
-    makeInvisible("labelForUpdatedDescription");
-    makeInvisible("gameDescriptionUpdated");
-    makeInvisible("labelForUpdatedImage");
-    makeInvisible("gameImageUrlUpdated");
-    makeInvisible("saveBtn");
-    makeInvisible("cancelBtn");
-
 }
 
 function removeDeletedElementFromDOM(domElement) {
@@ -136,7 +99,6 @@ function buildErrorMessage(inputEl, errosMsg) {
     errorMsgElement.innerHTML = errosMsg;
     inputEl.after(errorMsgElement);
 }
-
 
 document.querySelector(".submitBtn").addEventListener("click", function(event) {
     event.preventDefault();
