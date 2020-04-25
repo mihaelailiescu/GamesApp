@@ -1,10 +1,8 @@
 getGamesList(function(arrayOfGames) {
     for (var i = 0; i < arrayOfGames.length; i++) {
         createDomElement(arrayOfGames[i]);
-
     }
 });
-
 
 function createDomElement(gameObj) {
     var container1 = document.querySelector('.container');
@@ -14,101 +12,57 @@ function createDomElement(gameObj) {
                         <img src="${gameObj.imageUrl}" />
                         <p>${gameObj.description}</p> 
                         <button class="delete-btn" id="${gameObj._id}">Delete Game</button>
-                        <button class="update-btn" id="${gameObj._id}">Edit Game</button>`;
+                        <button class="update-btn" >Edit Game</button>`;
 
     container1.appendChild(gameELement);
 
-
     gameELement.setAttribute("id", gameObj._id)
     document.getElementById(`${gameObj._id}`).addEventListener("click", function(event) {
-        console.log(event.target);
         if (event.target.classList.contains('delete-btn')) {
             deleteGame(event.target.getAttribute("id"), function(apiResponse) {
-                console.log(apiResponse);
                 removeDeletedElementFromDOM(event.target.parentElement);
             })
         }
-        // daca este pe butonul de update, atunci in momentul in care utilizatorul apasa de Update btn, ii apar field-urile deja populate cu detaliile jocului pe care buton da click
+        // daca este pe butonul de update, atunci in momentul in care utilizatorul apasa pe Update btn, ii apar field-urile deja populate cu detaliile jocului pe care buton da click
         if (event.target.classList.contains('update-btn')) {
-
             var form = document.querySelector('#updateForm');
-            gameELement.appendChild(form);
+            form.reset(); //facem reset, ca sa ii stergem continutul - daca cumva are
+            event.target.parentElement.appendChild(form);
+            form.style.display = "initial"; //afisam formularul
 
-            showForm();
-            let gameTitle;
-            console.log(`${gameObj.title}`);
-            gameTitle = `${gameObj.title}`;
-            document.getElementById("gameTitleUpdated").value = gameTitle;
+            const gameContainerDiv = event.target.parentElement;
+            //punem in inputuri valorile afisate deja in pagina
+            form.querySelector("#gameTitleUpdated").value = gameContainerDiv.querySelector("h1").innerText;
+            form.querySelector("#gameDescriptionUpdated").value = gameContainerDiv.querySelector("p").innerText;
+            form.querySelector("#gameImageUrlUpdated").value = gameContainerDiv.querySelector("img").getAttribute("src");
 
-            let gameDescription;
-            console.log(`${gameObj.description}`);
-            gameDescription = `${gameObj.description}`;
-            document.getElementById("gameDescriptionUpdated").value = gameDescription;
+            form.querySelector("#saveBtn").addEventListener("click", function(event2) {
+                    event2.preventDefault();
+                    //le scoatem in variabile pentru ca le folosim in 2 locuri aici in functia asta 
+                    const inputTitle = form.querySelector("#gameTitleUpdated");
+                    const textareaDescription = form.querySelector("#gameDescriptionUpdated");
+                    const inputImageUrl = form.querySelector("#gameImageUrlUpdated");
 
-            let gameImage;
-            console.log(`${gameObj.imageUrl}`);
-            gameImage = `${gameObj.imageUrl}`;
-            document.getElementById("gameImageUrlUpdated").value = gameImage;
-
-            // container1.appendChild("updateForm");
-
+                    let urlencoded = new URLSearchParams();
+                    //luam valorile modificate de utilizator
+                    urlencoded.append("title", inputTitle.value);
+                    urlencoded.append("imageUrl", inputImageUrl.value);
+                    urlencoded.append("description", textareaDescription.value);
+                    // facem request-ul
+                    updateGameRequest(event2.target.parentElement.parentElement.getAttribute("id"), urlencoded)
+                        //dupa ce s-a facut update-ul, formularul dispare din pagina
+                    form.style.display = "none";
+                    //actualizam pagina cu noile valori modificate de utilizator
+                    gameContainerDiv.querySelector("h1").innerText = inputTitle.value;
+                    gameContainerDiv.querySelector("p").innerText = textareaDescription.value;
+                    gameContainerDiv.querySelector("img").getAttribute("src", inputImageUrl);
+                })
+                // daca apasam butonul de cancel, formularul dispare din pagina
+            form.querySelector("#cancelBtn").addEventListener("click", function() {
+                form.style.display = "none";
+            })
         }
-
-        document.getElementById("saveBtn").addEventListener("click", function(event) {
-
-            var urlencoded = new URLSearchParams();
-            console.log(document.getElementById("gameTitleUpdated").value);
-            urlencoded.append("title", document.getElementById("gameTitleUpdated").value);
-            urlencoded.append("imageUrl", document.getElementById("gameImageUrlUpdated").value);
-            urlencoded.append("description", document.getElementById("gameDescriptionUpdated").value);
-
-            console.log(gameObj._id);
-            updateGameRequest(gameObj._id, urlencoded)
-
-            //dupa ce s-a facut update-ul, formularul dispare din pagina
-
-            hideForm();
-        })
     })
-
-    // daca apasam butonul de cancel, formularul dispare din pagina
-    document.getElementById("cancelBtn").addEventListener("click", function() {
-        hideForm();
-    })
-}
-
-function makeVisible(objectID) {
-    document.getElementById(objectID).style.display = "initial";
-}
-
-function showForm() {
-
-    makeVisible("updateForm");
-    makeVisible("labelforUpdatedTitle");
-    makeVisible("gameTitleUpdated");
-    makeVisible("labelForUpdatedDescription");
-    makeVisible("gameDescriptionUpdated");
-    makeVisible("labelForUpdatedImage");
-    makeVisible("gameImageUrlUpdated");
-    makeVisible("saveBtn");
-    makeVisible("cancelBtn");
-}
-
-function makeInvisible(objectID) {
-    document.getElementById(objectID).style.display = "none";
-}
-
-function hideForm() {
-    makeInvisible("updateForm");
-    makeInvisible("labelforUpdatedTitle");
-    makeInvisible("gameTitleUpdated");
-    makeInvisible("labelForUpdatedDescription");
-    makeInvisible("gameDescriptionUpdated");
-    makeInvisible("labelForUpdatedImage");
-    makeInvisible("gameImageUrlUpdated");
-    makeInvisible("saveBtn");
-    makeInvisible("cancelBtn");
-
 }
 
 function removeDeletedElementFromDOM(domElement) {
@@ -143,7 +97,6 @@ function buildErrorMessage(inputEl, errosMsg) {
     errorMsgElement.innerHTML = errosMsg;
     inputEl.after(errorMsgElement);
 }
-
 
 document.querySelector(".submitBtn").addEventListener("click", function(event) {
     event.preventDefault();

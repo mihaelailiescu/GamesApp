@@ -38,25 +38,28 @@
     <div class="container"> </div>
 
 
-    <form id="updateForm">
-        <label for="gameTitle" style="display: none" id="labelforUpdatedTitle">Title *</label>
-        <input type="text" value="" name="gameTitle" style="display: none" id="gameTitleUpdated" />
+    <form id="updateForm" style="display: none">
+        <label for="gameTitleUpdated" id="labelforUpdatedTitle">Title *</label>
+        <input type="text" value="" name="gameTitle" id="gameTitleUpdated" />
 
-        <label for="gameDescription" style="display: none" id="labelForUpdatedDescription">Description</label>
-        <textarea name="gameDescription" id="gameDescriptionUpdated" style="display: none"></textarea>
+        <label for="gameDescriptionUpdated" id="labelForUpdatedDescription">Description</label>
+        <textarea name="gameDescription" id="gameDescriptionUpdated"></textarea>
 
-        <label for="gameImageUrl" style="display: none" id="labelForUpdatedImage">Image URL *</label>
-        <input type="text" name="gameImageUrl" id="gameImageUrlUpdated" style="display: none" />
+        <label for="gameImageUrlUpdated" id="labelForUpdatedImage">Image URL *</label>
+        <input type="text" name="gameImageUrl" id="gameImageUrlUpdated" />
 
-        <button class="updateBtn" style="display: none" id="saveBtn">Save Changes</button>
-        <button class="cancelBtn" style="display: none" id="cancelBtn">Cancel</button>
+        <button class="updateBtn" id="saveBtn">Save Changes</button>
+        <button class="cancelBtn" id="cancelBtn">Cancel</button>
     </form>
 
 
-    <!-- <script src="model.js"></script>
-    <script src="view.js"></script> -->
-    <script src="./WithAsync/modelWithAsync.js"></script>
-    <script src="./WithAsync/viewWithAsync.js"></script>
+    <script src="model.js"></script>
+    <script src="view.js"></script>
+    <!-- <script src="./WithAsync/modelWithAsync.js"></script>
+    <script src="./WithAsync/viewWithAsync.js"></script> -->
+    <!-- <script src="./OOP/FetchApi.js"></script>
+    <script src="./OOP/Game.js"></script>
+    <script src="./OOP/app.js"></script> -->
     <!-- <script src="./WithPromises/modelWithPromises.js"></script>
     <script src="./WithPromises/viewWithPromises.js"></script> -->
 </body>

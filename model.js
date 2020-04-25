@@ -1,4 +1,4 @@
-var apiURL = "https://games-world.herokuapp.com";
+var apiURL = "https://games-app-siit.herokuapp.com";
 
 function getGamesList(callbackFunction) {
     fetch(apiURL + "/games", {
@@ -44,8 +44,6 @@ function createGameRequest(gameObject, callbackCreateGame) {
 
 function updateGameRequest(idOfGameToBeUpdated, updatedGameObj) {
     console.log(apiURL + "/games/");
-
-
     fetch(apiURL + "/games/" + idOfGameToBeUpdated, {
             method: "PUT",
             headers: {
@@ -59,7 +57,7 @@ function updateGameRequest(idOfGameToBeUpdated, updatedGameObj) {
 
             return respJson;
         }).then(function(updatedGame) {
-            // console.log("update finished");
+            console.log("update finished");
             // callbackUpdateGame();
         })
         .catch(error => { console.log('request failed', error); });
