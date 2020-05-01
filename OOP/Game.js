@@ -1,7 +1,7 @@
 function Game() {
     this.title = "";
     this.description = "";
-    this.publisher = "";
+    this.genre = "";
     this.publisher = "";
     this.imageUrl = "";
     this.releaseDate = "";
