@@ -1,9 +1,9 @@
-var apiURL = "https://games-app-siit.herokuapp.com";
+let apiURL = "https://games-app-siit.herokuapp.com";
 let gameFetcher = new FetchGame(apiURL);
 gameFetcher.getGamesList((arrayOfGames) => { showGames(arrayOfGames) });
 
 function showGames(arrayOfGames) {
-    for (var i = 0; i < arrayOfGames.length; i++) {
+    for (let i = 0; i < arrayOfGames.length; i++) {
         createGameDom(arrayOfGames[i]);
     }
 }
@@ -19,7 +19,7 @@ function createGameDiv(gameObj) {
 }
 
 function createGameDom(gameObj) {
-    var container1 = document.querySelector('.container');
+    let container1 = document.querySelector('.container');
 
     //game div
     const gameDiv = createGameDiv(gameObj);
@@ -28,7 +28,7 @@ function createGameDom(gameObj) {
 
     document.getElementById(`${gameObj._id}`).addEventListener("click", function(event) {
         if (event.target.classList.contains('delete-btn')) {
-            gameFetcher.deleteGame(event.target.getAttribute("id"), function(apiResponse) {
+            gameFetcher.deleteGame(event.target.getAttribute("id"), (apiResponse) => {
                 removeDeletedElementFromDOM(event.target.parentElement);
             })
         }
@@ -40,7 +40,7 @@ function createGameDom(gameObj) {
 }
 
 function onUpdateHandler(event) {
-    var form = document.querySelector('#updateForm');
+    let form = document.querySelector('#updateForm');
     form.reset(); //facem reset, ca sa ii stergem continutul - daca cumva are
     event.target.parentElement.appendChild(form);
     form.style.display = "initial"; //afisam formularul
@@ -51,15 +51,13 @@ function onUpdateHandler(event) {
     form.querySelector("#gameDescriptionUpdated").value = gameContainerDiv.querySelector("p").innerText;
     form.querySelector("#gameImageUrlUpdated").value = gameContainerDiv.querySelector("img").getAttribute("src");
 
-    form.querySelector("#saveBtn").addEventListener("click", function(event2) {
+    form.querySelector("#saveBtn").addEventListener("click", (event2) => {
             onSaveHandler(event2, gameContainerDiv);
             //dupa ce s-a facut update-ul, formularul dispare din pagina
             form.style.display = "none";
         })
         // daca apasam butonul de cancel, formularul dispare din pagina
-    form.querySelector("#cancelBtn").addEventListener("click", function() {
-        form.style.display = "none";
-    })
+    form.querySelector("#cancelBtn").addEventListener("click", () => { form.style.display = "none"; })
 }
 
 function onSaveHandler(event, gameContainerDiv) {
@@ -81,7 +79,7 @@ function createUpdateGame() {
 }
 
 function addNewUpdatedFields(gameContainerDiv) {
-    var form = document.querySelector('#updateForm');
+    let form = document.querySelector('#updateForm');
     const inputTitle = form.querySelector("#gameTitleUpdated");
     const textareaDescription = form.querySelector("#gameDescriptionUpdated");
     const inputImageUrl = form.querySelector("#gameImageUrlUpdated");
@@ -90,7 +88,6 @@ function addNewUpdatedFields(gameContainerDiv) {
     gameContainerDiv.querySelector("h1").innerText = inputTitle.value;
     gameContainerDiv.querySelector("p").innerText = textareaDescription.value;
     gameContainerDiv.querySelector("img").getAttribute("src", inputImageUrl);
-
 }
 
 function removeDeletedElementFromDOM(domElement) {
@@ -138,7 +135,7 @@ function validateGameFields(gameTitle, gameGenre, gameImageUrl, gameRelease) {
     return valid;
 }
 
-document.querySelector(".submitBtn").addEventListener("click", function(event) {
+document.querySelector(".submitBtn").addEventListener("click", (event) => {
     event.preventDefault();
 
     let newGame = new Game();
