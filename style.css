@@ -4,44 +4,40 @@
     box-sizing: border-box;
 }
 
-.delete-btn {
-    width: 100px;
-    height: 20px;
-    background-color: red;
-    border: none;
-    color: white;
+body {
+    background-image: linear-gradient( to left, rgb(236, 233, 29), rgb(124, 201, 79));
 }
 
-.update-btn {
-    width: 100px;
-    height: 20px;
-    background-color: blue;
-    border: none;
-    color: white;
-}
-
-.submitBtn {
-    width: 100px;
-    height: 20px;
-    background-color: green;
-    border: none;
-    color: white;
-}
-
-.updateBtn {
-    width: 100px;
-    height: 20px;
-    background-color: yellowgreen;
-    border: none;
-    color: white;
-}
-
+.delete-btn,
+.update-btn,
+.submitBtn,
+.updateBtn,
 .cancelBtn {
     width: 100px;
     height: 20px;
-    background-color: violet;
     border: none;
     color: white;
+    border-radius: 12px;
+}
+
+.delete-btn {
+    background-color: red;
+}
+
+.update-btn {
+    background-color: blue;
+}
+
+.submitBtn {
+    background-color: green;
+}
+
+.updateBtn {
+    background-color: purple;
+}
+
+.cancelBtn {
+    background-color: midnightblue;
 }
 
 img {
@@ -64,6 +60,8 @@ button {
 .creationForm {
     display: flex;
     flex-direction: column;
+    width: 90%;
+    margin-left: 30px;
 }
 
 #updateForm {
@@ -77,6 +75,7 @@ button {
 .creationForm>select {
     display: block;
     margin: 5px 10px;
+    border-radius: 12px;
 }
 
 #updateForm>label,
@@ -97,3 +96,18 @@ button {
     display: block;
     font-size: 14px;
 }
+
+
+/* Responsive design */
+
+
+/* @media screen and (max-width:1024px) {
+    .creationForm>label,
+    .creationForm>input,
+    .creationForm>textarea,
+    .creationForm>select {
+        display: block;
+        margin: 5px 10px;
+        
+    }
+} */
