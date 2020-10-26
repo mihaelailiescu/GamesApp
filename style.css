@@ -72,10 +72,13 @@ button {
 .creationForm>label,
 .creationForm>input,
 .creationForm>textarea,
-.creationForm>select {
+.creationForm>select,
+#updateForm>label {
     display: block;
     margin: 5px 10px;
     border-radius: 12px;
+    font-size: larger;
+    font-weight: bold;
 }
 
 #updateForm>label,
@@ -84,6 +87,7 @@ button {
 #updateForm>select {
     display: block;
     margin: 5px 10px;
+    border-radius: 12px;
 }
 
 .inputError {
